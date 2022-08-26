@@ -1,0 +1,37 @@
+package com.spring.aop.advisor.joinpoint;
+
+import com.spring.aop.advisor.MethodInvocation;
+
+/**
+ * @author: hzc
+ * @date: 2022/8/24-13:48
+ */
+public class MethodInvocationProceedingJoinPoint implements ProceedingJoinPoint {
+
+    private final MethodInvocation methodInvocation;
+
+    public MethodInvocationProceedingJoinPoint(MethodInvocation mi) {
+        this.methodInvocation = mi;
+    }
+
+    @Override
+    public Object proceed() throws Throwable {
+        return this.methodInvocation.proceed();
+    }
+
+    @Override
+    public Object proceed(Object[] args) throws Throwable {
+        this.methodInvocation.setArguments(args);
+        return this.methodInvocation.proceed();
+    }
+
+    @Override
+    public Object[] getArgs() {
+        return this.methodInvocation.getArguments().clone();
+    }
+
+    @Override
+    public String getMethodName() {
+        return this.methodInvocation.getMethod().getName();
+    }
+}
